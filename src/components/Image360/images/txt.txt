@@ -1,0 +1,19 @@
+$('#img360').on({
+
+ 'click': function(){
+	
+
+
+var temp = (parseInt($('#img360').attr("alt")) + 1) % 36;
+ 
+	$('#img360').attr('src',"images/"+temp+".jpg");
+
+	$('#img360').attr('alt',""+temp+"");
+    
+}
+});
+
+
+
+
+
