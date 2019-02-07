@@ -4,6 +4,10 @@ import filesize from "filesize";
 
 //import api from "./services/api";
 
+import {bindActionCreators} from 'redux'
+import  {connect}  from 'react-redux'
+import * as actions from './components/actions'
+
 import GlobalStyle from "./styles/global";
 import { Container, Content } from "./styles";
 
@@ -48,6 +52,8 @@ class App extends Component {
     });
 
     uploadedFiles.forEach(this.processUpload);
+    //console.log(uploadedFiles)
+    this.props.loadImages(uploadedFiles)
   };
 
   updateFile = (id, data) => {
@@ -98,10 +104,13 @@ class App extends Component {
     this.setState({
       uploadedFiles: this.state.uploadedFiles.filter(file => file.id !== id)
     });
+  
+    this.props.loadImages(this.state.uploadedFiles)
   };
 
   componentWillUnmount() {
     this.state.uploadedFiles.forEach(file => URL.revokeObjectURL(file.preview));
+    
   }
 
   render() {
@@ -125,4 +134,13 @@ class App extends Component {
   }
 }
 
-export default App;
+//export default App;
+
+const mapStateToProps = state => ({
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+

@@ -3,6 +3,11 @@ import './image360.css';
 //import { promisify } from "util";
 //import { POINT_CONVERSION_HYBRID } from "constants";
 
+import {bindActionCreators} from 'redux'
+import  {connect}  from 'react-redux'
+import * as actions from '../actions'
+
+
 class image360 extends Component {
 
   constructor(props) {
@@ -23,24 +28,30 @@ class image360 extends Component {
     this.rotator = React.createRef()
   }
 
-  async componentWillMount(){
+   async componentWillReceiveProps(nextProps){
 
-    let tmpUpload = [];
-
+    //let tmpUpload = [];
+/*
     for(let i = 0; i < 36; i++){
       tmpUpload[i] = {
         id: i,
         url: require(`./images/${i}.jpg`)
       }
     }
-    
-    await this.setState({
-      uploadedFiles: tmpUpload,
-      numImages:tmpUpload.length
+    */
+  // tmpUpload = this.props.filelist
+    //console.log(tmpUpload)
+     await this.setState({
+      uploadedFiles: nextProps.filelist,
+      numImages: nextProps.filelist.length,
+      curImage:0,
     })
-
-    //console.log(this.state.uploadedFiles);
+    await console.log(this.state)
+    //this.props.filelist
   }
+
+
+
 
 
 
@@ -135,10 +146,15 @@ class image360 extends Component {
   }
   
 
-
+  
   render() {
-  const curImage = this.state.uploadedFiles[this.state.curImage].url
-    return (
+   
+
+
+  const curImage = this.state.numImages > 0 ? this.state.uploadedFiles[this.state.curImage].preview : ""
+  //const curImage = [this.state.curImage] > "" ? this.props.filelist[this.state.curImage].preview : ""
+ // console.log(this.state.uploadedFiles[this.state.curImage])
+  return (
       <div draggable="false" id="rotator" className="none" 
         ref={this.rotator}
         onMouseMove = {this.mouseMove}
@@ -156,4 +172,14 @@ class image360 extends Component {
     );
   }
 }
-export default image360;
+//export default image360;
+
+
+const mapStateToProps = state => ({
+  filelist: state.filelist,
+
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(image360);

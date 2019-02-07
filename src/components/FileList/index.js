@@ -1,11 +1,27 @@
 import React from "react";
+
+
+//import * as actions from '../actions'
+
+
+
+
 import CircularProgressbar from "react-circular-progressbar";
 import { MdCheckCircle, MdError, MdLink } from "react-icons/md";
 
 import { Container, FileInfo, Preview } from "./styles";
 
+
+
+
+
+
+
+
 const FileList = ({ files, onDelete }) => (
+  
   <Container>
+
     {files.map(uploadedFile => (
       <li key={uploadedFile.id}>
         <FileInfo>
@@ -56,4 +72,10 @@ const FileList = ({ files, onDelete }) => (
   </Container>
 );
 
+
+
 export default FileList;
+
+
+
+
